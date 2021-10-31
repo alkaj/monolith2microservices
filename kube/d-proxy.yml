@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-proxy
+  labels:
+    app: proxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: proxy
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      containers:
+        - name: udagram-reverse-proxy
+          image: alkaj/udagram-reverse-proxy
+          ports:
+            - containerPort: 80

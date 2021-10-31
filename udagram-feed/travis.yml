@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "12"
+
+branches:
+  only:
+    - feed
+
+services:
+  - docker
+
+post_script:
+  - echo "Ready to docker build the feed service"
