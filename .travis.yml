@@ -2,12 +2,17 @@ language: node_js
 node_js:
   - "12"
 
-branches:
-  only:
-    - feed
-
 services:
   - docker
 
-post_script:
-  - echo "Ready to docker build the feed service"
+jobs:
+  include:
+    if: branch = user
+    env: B=user
+    script:
+      - echo "Building from $B branch"
+
+    if: branch = feed
+    env: B=feed
+    script:
+      - echo "Building from $B branch"
