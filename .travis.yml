@@ -13,7 +13,7 @@ branches:
 
 stages:
   - name: build_feed
-    if: $TRAVIS_PULL_REQUEST_BRANCH = "feed"
+    # if: $TRAVIS_PULL_REQUEST_BRANCH = "feed"
 
 jobs:
   include:
