@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "12"
+
+services:
+  - docker
+
+jobs:
+  include:
+    if: branch = user
+    env: B=user
+    script:
+      - echo "Building from $B branch"
+
+    if: branch = feed
+    env: B=feed
+    script:
+      - echo "Building from $B branch"
