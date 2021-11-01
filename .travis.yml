@@ -19,3 +19,5 @@ deploy:
 
     if: $TRAVIS_PULL_REQUEST_BRANCH = "feed"
     env: B=feed
+    script:
+      - echo "Building from $B branch to main"
