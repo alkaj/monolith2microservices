@@ -1,91 +1,101 @@
-# Monolith2Miroservices
+# Udagram Image Filtering Application
 
-Udacity aws cloud dev training project 3
+Udagram is a simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree. It allows users to register and log into a web client, post photos to the feed, and process photos using an image filtering microservice.
 
-## Getting started
+The project is split into two parts:
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+1. Frontend - Angular web application built with Ionic Framework
+2. Backend RESTful API - Node-Express application
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Getting Started
 
-## Add your files
+> _tip_: it's recommended that you start with getting the backend API running since the frontend web application depends on the API.
 
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+### Prerequisite
 
+1. The depends on the Node Package Manager (NPM). You will need to download and install Node from [https://nodejs.com/en/download](https://nodejs.org/en/download/). This will allow you to be able to run `npm` commands.
+2. Environment variables will need to be set. These environment variables include database connection details that should not be hard-coded into the application code.
+
+#### Environment Script
+
+A file named `set_env.sh` has been prepared as an optional tool to help you configure these variables on your local development environment.
+
+We do _not_ want your credentials to be stored in git. After pulling this `starter` project, run the following command to tell git to stop tracking the script in git but keep it stored locally. This way, you can use the script for your convenience and reduce risk of exposing your credentials.
+`git rm --cached set_env.sh`
+
+Afterwards, we can prevent the file from being included in your solution by adding the file to our `.gitignore` file.
+
+### 1. Database
+
+Create a PostgreSQL database either locally or on AWS RDS. The database is used to store the application's metadata.
+
+- We will need to use password authentication for this project. This means that a username and password is needed to authenticate and access the database.
+- The port number will need to be set as `5432`. This is the typical port that is used by PostgreSQL so it is usually set to this port by default.
+
+Once your database is set up, set the config values for environment variables prefixed with `POSTGRES_` in `set_env.sh`.
+
+- If you set up a local database, your `POSTGRES_HOST` is most likely `localhost`
+- If you set up an RDS database, your `POSTGRES_HOST` is most likely in the following format: `***.****.us-west-1.rds.amazonaws.com`. You can find this value in the AWS console's RDS dashboard.
+
+### 2. S3
+
+Create an AWS S3 bucket. The S3 bucket is used to store images that are displayed in Udagram.
+
+Set the config values for environment variables prefixed with `AWS_` in `set_env.sh`.
+
+### 3. Backend API
+
+Launch the backend API locally. The API is the application's interface to S3 and the database.
+
+- To download all the package dependencies, run the command from the directory `udagram-api/`:
+  ```bash
+  npm install .
+  ```
+- To run the application locally, run:
+  ```bash
+  npm run dev
+  ```
+- You can visit `http://localhost:8080/api/v0/feed` in your web browser to verify that the application is running. You should see a JSON payload. Feel free to play around with Postman to test the API's.
+
+### 4. Frontend App
+
+Launch the frontend app locally.
+
+- To download all the package dependencies, run the command from the directory `udagram-frontend/`:
+  ```bash
+  npm install .
+  ```
+- Install Ionic Framework's Command Line tools for us to build and run the application:
+  ```bash
+  npm install -g ionic
+  ```
+- Prepare your application by compiling them into static files.
+  ```bash
+  ionic build
+  ```
+- Run the application locally using files created from the `ionic build` command.
+  ```bash
+  ionic serve
+  ```
+- You can visit `http://localhost:8100` in your web browser to verify that the application is running. You should see a web interface.
+
+## Tips
+
+1. Take a look at `udagram-api` -- does it look like we can divide it into two modules to be deployed as separate microservices?
+2. The `.dockerignore` file is included for your convenience to not copy `node_modules`. Copying this over into a Docker container might cause issues if your local environment is a different operating system than the Docker image (ex. Windows or MacOS vs. Linux).
+3. It's useful to "lint" your code so that changes in the codebase adhere to a coding standard. This helps alleviate issues when developers use different styles of coding. `eslint` has been set up for TypeScript in the codebase for you. To lint your code, run the following:
+   ```bash
+   npx eslint --ext .js,.ts src/
+   ```
+   To have your code fixed automatically, run
+   ```bash
+   npx eslint --ext .js,.ts src/ --fix
+   ```
+4. `set_env.sh` is really for your backend application. Frontend applications have a different notion of how to store configurations. Configurations for the application endpoints can be configured inside of the `environments/environment.*ts` files.
+5. In `set_env.sh`, environment variables are set with `export $VAR=value`. Setting it this way is not permanent; every time you open a new terminal, you will have to run `set_env.sh` to reconfigure your environment variables. To verify if your environment variable is set, you can check the variable with a command like `echo $POSTGRES_USERNAME`.
+
+6. Cluster Creation
+
+```bash
+eksctl create cluster --name udagram --region us-east-1 --zones us-east-1a,us-east-1b,us-east-1c,us-east-1d --instance-types t3.small --nodegroup-name uda-nodes
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/alkaj/monolith2miroservices.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/project/integrations/)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://docs.gitlab.com/ee/user/clusters/agent/)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:3526d1f81343d5b5d6de98f345ff68ab?https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
-

@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "12"
+
+services:
+  - docker
+
+branches:
+  only:
+    - master
+
+jobs:
+  include:
+    if: $TRAVIS_PULL_REQUEST_BRANCH = "user"
+    env: B=user
+    script:
+      - echo "Building from $B branch"
+
+    if: $TRAVIS_PULL_REQUEST_BRANCH = "feed"
+    env: B=feed
+    script:
+      - echo "Building from $B branch"
