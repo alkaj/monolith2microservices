@@ -11,14 +11,11 @@ branches:
     - feed
     - user
 
-jobs:
-  include:
+deploy:
+  provider: script
+  script:
     if: $TRAVIS_PULL_REQUEST_BRANCH = "user"
     env: B=user
-    script:
-      - echo "Building from $B branch"
 
     if: $TRAVIS_PULL_REQUEST_BRANCH = "feed"
     env: B=feed
-    script:
-      - echo "Building from $B branch to main"
