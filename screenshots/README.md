@@ -1,25 +1,49 @@
 # Screenshots
+
 To help review your infrastructure, please include the following screenshots in this directory::
 
 ## Deployment Pipeline
-* DockerHub showing containers that you have pushed
-* GitHub repository’s settings showing your Travis webhook (can be found in Settings - Webhook)
-* Travis CI showing a successful build and deploy job
+
+- DockerHub showing containers that you have pushed
+  ![images](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/images.png)
+- GitHub repository’s settings showing your Travis webhook (can be found in Settings - Webhook)
+  ![settings](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis_integration.png)
+- Travis CI showing a successful build and deploy job
+  ![travis](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis-ci_passing.png)  
+  -- Then my builds stopped due to free credit expiration(the second line rejection's reason)
+  ![travis](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis-ci_no-credits.png)
 
 ## Kubernetes
-* To verify Kubernetes pods are deployed properly
+
+- To verify Kubernetes pods are deployed properly
+
 ```bash
 kubectl get pods
 ```
-* To verify Kubernetes services are properly set up
+
+![k8s](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/pods_running.png)
+
+- To verify Kubernetes services are properly set up
+
 ```bash
 kubectl describe services
 ```
-* To verify that you have horizontal scaling set against CPU usage
+
+![k8s](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/describe_services_1_2.png)  
+![k8s](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/describe_services_2_2.png)
+
+- To verify that you have horizontal scaling set against CPU usage
+
 ```bash
 kubectl describe hpa
 ```
-* To verify that you have set up logging with a backend application
+
+![k8s](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/autoscaled_deployment.png)
+
+- To verify that you have set up logging with a backend application
+
 ```bash
 kubectl logs {pod_name}
 ```
+
+![feed log](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/feed_api_log.png)
