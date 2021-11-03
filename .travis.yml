@@ -10,7 +10,12 @@ branches:
     - main
     - feed
     - user
+    - front
+    - proxy
 
+# Whenever a PR is created from feed, user, front or proxy branch,
+# we will use the relative directory to build that service image and
+# push it to the docker hub.
 stages:
   - name: build_reverse_proxy
     if: type = pull && head_branch = "proxy"
@@ -26,7 +31,7 @@ jobs:
     - stage: build_reverse_proxy
       name: building_reverse_proxy
       script:
-        - echo "Building an image for the front-end service"
+        - echo "Building an image for the reverse proxy service"
         - docker build -t alkaj/udagram-reverse-proxy:$TRAVIS_BUILD_NUMBER ./ureverse-proxy
         - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
         - docker push alkaj/udagram-reverse-proxy:$TRAVIS_BUILD_NUMBER
