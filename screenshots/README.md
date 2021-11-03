@@ -9,9 +9,7 @@ To help review your infrastructure, please include the following screenshots in 
 - GitHub repository’s settings showing your Travis webhook (can be found in Settings - Webhook)
   ![settings](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis_integration.png)
 - Travis CI showing a successful build and deploy job
-  ![travis](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis-ci_passing.png)  
-  -- Then my builds stopped due to free credit expiration(the second line rejection's reason)
-  ![travis](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis-ci_no-credits.png)
+  ![travis](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis-ci_passing.png)
 
 ## Kubernetes
 
