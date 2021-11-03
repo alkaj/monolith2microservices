@@ -20,5 +20,7 @@ jobs:
     - stage: build_feed
       name: building_feed
       script:
-        - echo "Building feed branch for a merge to main"
-        - docker build -t alkaj/feed:$TRAVIS_BUILD_NUMBER ./feed
+        - echo "Building an image for the feed service"
+        - docker build -t alkaj/udagram-feed:$TRAVIS_BUILD_NUMBER ./feed
+        - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+        - docker push alkaj/udagram-feed:$TRAVIS_BUILD_NUMBER
