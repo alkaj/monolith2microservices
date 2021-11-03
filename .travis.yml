@@ -12,15 +12,45 @@ branches:
     - user
 
 stages:
+  - name: build_reverse_proxy
+    if: type = pull && head_branch = "proxy"
+  - name: build_front
+    if: type = pull && head_branch = "front"
+  - name: build_user
+    if: type = pull && head_branch = "user"
   - name: build_feed
     if: type = pull && head_branch = "feed"
 
 jobs:
   include:
+    - stage: build_reverse_proxy
+      name: building_reverse_proxy
+      script:
+        - echo "Building an image for the front-end service"
+        - docker build -t alkaj/udagram-reverse-proxy:$TRAVIS_BUILD_NUMBER ./ureverse-proxy
+        - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+        - docker push alkaj/udagram-reverse-proxy:$TRAVIS_BUILD_NUMBER
+
+    - stage: build_front
+      name: building_frontend
+      script:
+        - echo "Building an image for the front-end service"
+        - docker build -t alkaj/udagram-front:$TRAVIS_BUILD_NUMBER ./udagram-frontend
+        - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+        - docker push alkaj/udagram-front:$TRAVIS_BUILD_NUMBER
+
+    - stage: build_user
+      name: building_user
+      script:
+        - echo "Building an image for the user service"
+        - docker build -t alkaj/udagram-user:$TRAVIS_BUILD_NUMBER ./udagram-user
+        - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+        - docker push alkaj/udagram-user:$TRAVIS_BUILD_NUMBER
+
     - stage: build_feed
       name: building_feed
       script:
         - echo "Building an image for the feed service"
-        - docker build -t alkaj/udagram-feed:$TRAVIS_BUILD_NUMBER ./feed
+        - docker build -t alkaj/udagram-feed:$TRAVIS_BUILD_NUMBER ./udagram-feed
         - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
         - docker push alkaj/udagram-feed:$TRAVIS_BUILD_NUMBER
