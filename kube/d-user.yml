@@ -19,3 +19,54 @@ spec:
           image: alkaj/udagram-user
           ports:
             - containerPort: 8080
+          env:
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: pusername
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: ppassword
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: phost
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: pdb
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: aaki
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: asak
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: ar
+            - name: AWS_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: as3b
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: udagram-secrets
+                  key: js
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: udagram-config
+                  key: url
