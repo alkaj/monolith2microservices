@@ -8,7 +8,7 @@ To help review your infrastructure, please include the following screenshots in 
   ![images](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/images.png)
 - GitHub repository’s settings showing your Travis webhook (can be found in Settings - Webhook)
   ![settings](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis_integration.png)
-- Travis CI showing a successful build and deploy job
+- Travis CI showing a successful build and deploy job  
   Builds will triggered everytime a push request is made to the master branch, and a docker image will be generated using the dockerfile in the directory relative to the branch and will be pushed to DockerHub.
 
   ![travis](https://raw.githubusercontent.com/alkaj/monolith2microservices/master/screenshots/travis-ci_passing.png)
