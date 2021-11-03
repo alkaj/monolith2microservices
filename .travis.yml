@@ -21,3 +21,4 @@ jobs:
       name: building_feed
       script:
         - echo "Building feed branch for a merge to main"
+        - docker build -t alkaj/feed:$TRAVIS_BUILD_NUMBER ./feed
